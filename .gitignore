@@ -1,0 +1,32 @@
+#Gradle
+# ----
+.gradle
+/build
+
+gradle-app.setting
+
+!gradle-wrapper.jar
+
+.gradletasknamecache
+
+# IDEA
+# ----
+.idea
+.idea/
+.shelf
+/*.iml
+/*.ipr
+/*.iws
+/out
+
+/out/*.*
+
+# Others
+# ----
+**/*.class
+**/*.bin
+**/*.build
+**/*.out
+build
+build/
+**/*.jar
