@@ -1,10 +1,14 @@
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import controller.Library;
 import factory.LibFactory;
+import injection.LibraryModule;
 
 public class AppMain {
     public static void main(String[] args) {
-        LibFactory libFactory = new LibFactory();
-        Library library = libFactory.create(3);
+        Injector injector = Guice.createInjector(new LibraryModule("./src/main/resources/books.txt"));
+        Library library = injector.getInstance(LibFactory.class).create(1000);
         library.print();
     }
 }

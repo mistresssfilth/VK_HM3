@@ -1,13 +1,14 @@
 package factory;
 
+import com.google.inject.Inject;
 import controller.Library;
 
 public class LibFactory {
     private static Library library;
-    private FileBooksFactory fileBooksFactory;
+    @Inject
+    private BooksFactory fileBooksFactory;
 
     public Library create(int capacity){
-        fileBooksFactory = new FileBooksFactory("./src/main/resources/books.txt");
         library = new Library(capacity, fileBooksFactory);
         return library;
     }
