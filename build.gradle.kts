@@ -16,6 +16,9 @@ dependencies {
     implementation("org.jetbrains:annotations:23.0.0")
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation("com.google.code.gson:gson:2.10")
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compileOnly("org.projectlombok:lombok:1.18.24")
+
 
 
 }

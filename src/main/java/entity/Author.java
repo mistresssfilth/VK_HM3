@@ -3,7 +3,6 @@ package entity;
 import lombok.Data;
 
 @Data
-public class Book {
+public class Author {
     private String name;
-    private Author author;
 }
