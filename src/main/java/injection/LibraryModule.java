@@ -3,7 +3,6 @@ package injection;
 import com.google.inject.AbstractModule;
 import factory.BooksFactory;
 import factory.FileBooksFactory;
-import factory.LibFactory;
 
 public class LibraryModule extends AbstractModule {
     private static String path;
