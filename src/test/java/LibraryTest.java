@@ -14,7 +14,6 @@ import org.mockito.Mockito;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,6 +29,8 @@ public final class LibraryTest {
         books.add(new Book("book 0", new Author("author 0")));
         books.add(new Book("book 1", new Author("author 1")));
         books.add(new Book("book 2", new Author("author 2")));
+        books.add(new Book("book 3", new Author("author 3")));
+        books.add(new Book("book 4", new Author("author 4")));
 
         Mockito.when(booksFactory.books()).thenReturn(books);
         library = new Library(books.size() + 1, booksFactory);
@@ -37,6 +38,7 @@ public final class LibraryTest {
     @Test
     public void booksInOrderTest() {
         List<Book> booksFromLibrary = library.getBooks();
+
         for (int i = 0; i < books.size(); i++){
             assertEquals(booksFromLibrary.get(i), books.get(i));
         }
@@ -66,14 +68,15 @@ public final class LibraryTest {
     @Test
     public void addBookTest() throws NoEmptyPlaceException, EmptyCellException {
         library.getBook(1);
+        library.getBook(4);
         Book newBook = new Book("new book", new Author("new author"));
         library.addBook(newBook);
         assertNotNull(library.getBook(1));
     }
     @Test
     public void noEmptyPlacesTest() throws NoEmptyPlaceException {
-        library.addBook(new Book("book 3", new Author("author 3")));
-        assertThrows(NoEmptyPlaceException.class, () -> library.addBook(new Book("book 4", new Author("author 4"))));
+        library.addBook(new Book("book 5", new Author("author 5")));
+        assertThrows(NoEmptyPlaceException.class, () -> library.addBook(new Book("book 6", new Author("author 6"))));
     }
     @Test
     public void printTest(){
