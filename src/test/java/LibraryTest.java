@@ -88,7 +88,8 @@ public final class LibraryTest {
         library.getBook(4);
         Book newBook = new Book("new book", new Author("new author"));
         library.addBook(newBook);
-        assertNotNull(library.getBook(1));
+        List<Book> booksFromLib = library.getBooks();
+        assertEquals(newBook, booksFromLib.get(1));
     }
     @Test
     public void noEmptyPlacesTest() throws NoEmptyPlaceException {
