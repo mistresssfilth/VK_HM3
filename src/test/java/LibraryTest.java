@@ -12,6 +12,7 @@ import exception.NoEmptyPlaceException;
 import factory.BooksFactory;
 import injection.LibraryModule;
 import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -25,13 +26,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public final class LibraryTest {
     private @NotNull Library library;
     @Inject
-    private @NotNull BooksFactory booksFactory;
-    private List<Book> books = new ArrayList<>();
-    @BeforeEach
-    public void beforeEachTesting() throws LibrarySizeException {
-        final Injector injector = Guice.createInjector(new LibraryModule("./src/main/resources/books.txt"));
-        injector.injectMembers(this);
-
+    private @NotNull static BooksFactory booksFactory;
+    private static List<Book> books = new ArrayList<>();
+    @BeforeAll
+    static void init(){
         booksFactory = Mockito.mock(BooksFactory.class);
 
         books.add(new Book("book 0", new Author("author 0")));
@@ -41,6 +39,13 @@ public final class LibraryTest {
         books.add(new Book("book 4", new Author("author 4")));
 
         Mockito.when(booksFactory.books()).thenReturn(books);
+    }
+
+    @BeforeEach
+    public void beforeEachTesting() throws LibrarySizeException {
+        final Injector injector = Guice.createInjector(new LibraryModule("./src/main/resources/books.txt"));
+        injector.injectMembers(this);
+
         library = new Library(books.size() + 1, booksFactory);
     }
     @Test
