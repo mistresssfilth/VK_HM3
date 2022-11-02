@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public final class LibraryTest {
     private @NotNull Library library;
     @Inject
-    private @NotNull static BooksFactory booksFactory;
+    private static@NotNull BooksFactory booksFactory;
     private static List<Book> books = new ArrayList<>();
     @BeforeAll
     static void init(){
