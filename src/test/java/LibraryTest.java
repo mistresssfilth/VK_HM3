@@ -1,5 +1,8 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import controller.Library;
 import entity.Author;
 import entity.Book;
@@ -7,6 +10,7 @@ import exception.EmptyCellException;
 import exception.LibrarySizeException;
 import exception.NoEmptyPlaceException;
 import factory.BooksFactory;
+import injection.LibraryModule;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,10 +24,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public final class LibraryTest {
     private @NotNull Library library;
+    @Inject
     private @NotNull BooksFactory booksFactory;
-    private List<Book> books = new ArrayList<>();;
+    private List<Book> books = new ArrayList<>();
     @BeforeEach
     public void beforeEachTesting() throws LibrarySizeException {
+        final Injector injector = Guice.createInjector(new LibraryModule("./src/main/resources/books.txt"));
+        injector.injectMembers(this);
+
         booksFactory = Mockito.mock(BooksFactory.class);
 
         books.add(new Book("book 0", new Author("author 0")));
@@ -34,6 +42,10 @@ public final class LibraryTest {
 
         Mockito.when(booksFactory.books()).thenReturn(books);
         library = new Library(books.size() + 1, booksFactory);
+    }
+    @Test
+    public void createLibraryTest() throws LibrarySizeException {
+        assertThrows(LibrarySizeException.class, () -> new Library(1, booksFactory));
     }
     @Test
     public void booksInOrderTest() {
